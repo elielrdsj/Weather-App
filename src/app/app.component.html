@@ -1,0 +1,62 @@
+<div class="head">
+  <h1>Weather App</h1>
+  <h2>Seu aplicativo de previsão do tempo</h2>
+</div>
+<div class="search">
+  <form #form="ngForm" (submit)="onSubmit()" autocomplete="off">
+    <input
+      type="text"
+      placeholder="Procure uma nova cidade"
+      name="city"
+      [(ngModel)]="cityName"
+    />
+  </form>
+</div>
+<div class="displayer">
+  <div class="container" *ngFor="let weather of weatherData; index as i">
+    <div class="upper-data" >
+      <img src="../assets/hotc.png" *ngIf="weather.main.temp>15">
+      <img src="../assets/coldc.jpg" *ngIf="weather.main.temp<=15">
+      <div class="weather-data" ngClass="{hotClass : weather.main.temp>15, coldclass : weather.main.temp <15 }">
+        <div class="location">{{ weather.name }}</div>
+        <div class="temperature">
+          {{ weather.main.temp | number : "1.0-0" }}°C
+        </div>
+      </div>
+    </div>
+    <div class="lower-data">
+      <div class="more-info-label">Mais informações
+        <button class="button" (click)="onDelete(i)"><mat-icon>delete</mat-icon></button>
+      </div>
+      <div class="more-info-container">
+        <div class="info-block">
+          <fa-icon style="font-size: 40px" [icon]="faTemperatureQuarter"></fa-icon>
+          <!-- <i class="fa-solid fa-temperature-low"></i> -->
+          <span>Min</span>
+        </div>
+        <div class="info-block-value">
+          {{ weather.main.temp_min | number : "1.0-0" }}°C
+        </div>
+        <div class="info-block">
+          <fa-icon style="font-size: 40px" [icon]="faTemperatureThreeQuarters"></fa-icon>
+          <!-- <i class="fa-solid fa-temperature-high"></i> -->
+          <span>Max</span>
+        </div>
+        <div class="info-block-value">
+          {{ weather.main.temp_max | number : "1.0-0" }}
+        </div>
+        <div class="info-block">
+          <fa-icon style="font-size: 40px" [icon]="faDroplet"></fa-icon>
+<!--           <i class="fa-solid fa-droplet-percent"></i> -->
+          <span>Umidade</span>
+        </div>
+        <div class="info-block-value">{{ weather.main.humidity }}%</div>
+        <div class="info-block">
+          <fa-icon style="font-size: 35px" [icon]="faWind"></fa-icon>
+          <span>Vel. do Vento</span>
+        </div>
+        <div class="info-block-value">{{ weather.wind.speed }} km/h</div>
+      </div>
+    </div>
+  </div>
+</div>
